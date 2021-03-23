@@ -1,14 +1,3 @@
-## Getting Started
+# Trapped in a room - with robots!
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-## Dependency Management
-
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+You have somehow stumbled into a room full of robots, and the only way out is a door on the other side of the room. Can you get out? What if there are more robots on the other side of the door? The only way to find out is to play - RoboChase.
