@@ -1,4 +1,4 @@
-package robochase;
+import javax.swing.WindowConstants;
 
 public class RoboChase {
     public static void main(String[] args) {
