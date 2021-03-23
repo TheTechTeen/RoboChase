@@ -1,3 +1,5 @@
+package robochase;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -66,6 +68,17 @@ public class RoboGUI extends JFrame
         currentScoreField = new JTextField("", SCORE_FIELD_WIDTH);
         currentScoreField.setEditable(false);
         add(currentScoreField);
+    }
+
+    public void setBoardSize(int numRows, int numCols)
+    {
+        boardArea.setColumns(numCols);
+        boardArea.setRows(numRows);
+    }
+
+    public void displayBoard(String boardString)
+    {
+        boardArea.setText(boardString);
     }
 
     private class ButtonHandler implements ActionListener

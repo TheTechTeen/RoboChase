@@ -1,7 +1,9 @@
 import javax.swing.WindowConstants;
 
-public class RoboChase {
-    public static void main(String[] args) {
+public class RoboChase 
+{
+    public static void main(String[] args) 
+    {
         RoboGUI robotFrame = new RoboGUI(); // create ButtonFrame
         robotFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         robotFrame.setSize(350, 400); // set frame size
