@@ -1,5 +1,3 @@
-package robochase;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,6 +26,8 @@ public class RoboGUI extends JFrame
     private int SCORE_FIELD_WIDTH = 28;
     private int RESULTS_AREA_HEIGHT = 4;
     private int RESULTS_AREA_WIDTH = 30;
+
+    private Engine currentGame;
 
     public RoboGUI() 
     {
@@ -70,12 +70,6 @@ public class RoboGUI extends JFrame
         add(currentScoreField);
     }
 
-    public void setBoardSize(int numRows, int numCols)
-    {
-        boardArea.setColumns(numCols);
-        boardArea.setRows(numRows);
-    }
-
     public void displayBoard(String boardString)
     {
         boardArea.setText(boardString);
@@ -86,7 +80,9 @@ public class RoboGUI extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            // Unimplemented at the moment
+            if(event.getSource() == buttonStart) {
+                currentGame = new Engine(RoboGUI.this);
+            }
         }
     }
 }
