@@ -1,8 +1,10 @@
+import java.util.PropertyResourceBundle;
+
 public class BoardObject
 {
     private String name;
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
     private char symbol;
 
     BoardObject(String name, char symbol, int x, int y)

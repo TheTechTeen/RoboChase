@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class RoboGUI extends JFrame
+public class RoboGUI extends JFrame implements GUI
 {
     private JPanel buttonPanel;
     private JButton buttonUp; 
@@ -68,6 +68,13 @@ public class RoboGUI extends JFrame
         currentScoreField = new JTextField("", SCORE_FIELD_WIDTH);
         currentScoreField.setEditable(false);
         add(currentScoreField);
+
+        start();
+    }
+
+    public void start()
+    {
+        currentGame = new Engine(RoboGUI.this);
     }
 
     public void displayBoard(String boardString)
@@ -81,7 +88,7 @@ public class RoboGUI extends JFrame
         public void actionPerformed(ActionEvent event)
         {
             if(event.getSource() == buttonStart) {
-                currentGame = new Engine(RoboGUI.this);
+                currentGame.startLevel(1);
             }
         }
     }
