@@ -1,5 +1,3 @@
-import java.util.PropertyResourceBundle;
-
 public class BoardObject
 {
     private String name;

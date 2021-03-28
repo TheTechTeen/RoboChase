@@ -1,7 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class Engine 
 {
@@ -39,7 +37,7 @@ public class Engine
         
         for (char[] row : board) 
         {
-            Arrays.fill(row, ' ');
+            Arrays.fill(row, FLOOR);
         }
         
         for (BoardObject entity : entities) 
