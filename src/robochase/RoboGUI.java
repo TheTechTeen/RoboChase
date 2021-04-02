@@ -69,17 +69,12 @@ public class RoboGUI extends JFrame implements GUI
         currentScoreField.setEditable(false);
         add(currentScoreField);
 
-        start();
-    }
-
-    public void start()
-    {
-        currentGame = new Engine(RoboGUI.this);
+        currentGame = new Engine();
     }
 
     public void displayBoard(String boardString)
     {
-        boardArea.setText(boardString);
+        boardArea.setText(currentGame.displayBoard());
     }
 
     private class ButtonHandler implements ActionListener
@@ -87,9 +82,27 @@ public class RoboGUI extends JFrame implements GUI
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            if(event.getSource() == buttonStart) {
+            if(event.getSource() == buttonStart) 
+            {
                 currentGame.startLevel(1);
             }
+            else if (event.getSource() == buttonLeft)
+            {
+                currentGame.human.move(Player.LEFT);
+            }
+            else if (event.getSource() == buttonRight)
+            {
+                currentGame.human.move(Player.RIGHT);
+            }
+            else if (event.getSource() == buttonUp)
+            {
+                currentGame.human.move(Player.UP);
+            }
+            else if (event.getSource() == buttonDown)
+            {
+                currentGame.human.move(Player.DOWN);
+            }
+            displayBoard(currentGame.displayBoard());
         }
     }
 }

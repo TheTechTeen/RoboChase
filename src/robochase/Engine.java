@@ -6,7 +6,6 @@ public class Engine
     private int numRows;
     private int numCols;
     private ArrayList<BoardObject> entities;
-    private GUI gui;
 
     private final char FENCE = 'X';
     private final char STAIR = '>';
@@ -15,11 +14,10 @@ public class Engine
     private int stairX = 5;
     private int stairY = 0;
 
-    private Player human = new Player();
+    public Player human = new Player();
 
-    Engine(GUI gui) 
+    Engine() 
     {
-        this.gui = gui;
         startLevel(1);
     }
 
@@ -28,10 +26,9 @@ public class Engine
         initializeBoard(12, 12);
         placeRobots(3 + level); // eventually should export this so it isn't hardcoded
         placeHuman();
-        displayBoard();
     }
 
-    public void displayBoard()
+    public String displayBoard()
     {
         char[][] board = new char[numRows][numCols];
         
@@ -59,7 +56,7 @@ public class Engine
         // remove the final newline
         boardString.deleteCharAt(boardString.length() - 1);
 
-        gui.displayBoard(boardString.toString());
+        return boardString.toString();
     }
 
     public void initializeBoard(int numRows, int numCols)
