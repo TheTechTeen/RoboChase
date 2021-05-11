@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class RoboGUI extends JFrame implements GUI
+public class RoboGUI extends JFrame
 {
     private JPanel buttonPanel;
     private JButton buttonUp; 
@@ -27,7 +27,7 @@ public class RoboGUI extends JFrame implements GUI
     private int RESULTS_AREA_HEIGHT = 4;
     private int RESULTS_AREA_WIDTH = 30;
 
-    private Engine currentGame;
+    private transient Engine currentGame;
 
     public RoboGUI() 
     {
