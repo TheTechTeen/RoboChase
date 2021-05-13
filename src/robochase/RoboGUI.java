@@ -9,8 +9,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class RoboGUI extends JFrame
+public class RoboGUI extends JFrame implements GUI
 {
     private JPanel buttonPanel;
     private JButton buttonUp; 
@@ -29,7 +31,9 @@ public class RoboGUI extends JFrame
 
     private transient Engine currentGame;
 
-    public RoboGUI() 
+    private final char FLOOR = ' ';
+
+    public RoboGUI()
     {
         super("RoboChase!");
         setLayout(new FlowLayout());
@@ -69,12 +73,38 @@ public class RoboGUI extends JFrame
         currentScoreField.setEditable(false);
         add(currentScoreField);
 
-        currentGame = new Engine();
+        currentGame = new Engine(this);
     }
 
-    public void displayBoard(String boardString)
+    public void displayBoard(ArrayList<BoardObject> boardObjects, int numCols, int numRows)
     {
-        boardArea.setText(currentGame.displayBoard());
+        char[][] board = new char[numRows][numCols];
+
+        for (char[] row : board)
+        {
+            Arrays.fill(row, FLOOR);
+        }
+
+        for (BoardObject entity : boardObjects)
+        {
+            board[entity.getY()][entity.getX()] = entity.getSymbol();
+        }
+
+        StringBuilder boardString = new StringBuilder();
+
+        for (char[] row : board)
+        {
+            for (char letter : row)
+            {
+                boardString.append(letter);
+            }
+            boardString.append("\n");
+        }
+
+        // remove the final newline
+        boardString.deleteCharAt(boardString.length() - 1);
+
+        boardArea.setText(boardString.toString());
     }
 
     private class ButtonHandler implements ActionListener
@@ -84,25 +114,24 @@ public class RoboGUI extends JFrame
         {
             if(event.getSource() == buttonStart) 
             {
-                currentGame.startLevel(1);
+                currentGame.startLevel(true);
             }
             else if (event.getSource() == buttonLeft)
             {
-                currentGame.human.move(Player.LEFT);
+                currentGame.humanMove(Player.LEFT);
             }
             else if (event.getSource() == buttonRight)
             {
-                currentGame.human.move(Player.RIGHT);
+                currentGame.humanMove(Player.RIGHT);
             }
             else if (event.getSource() == buttonUp)
             {
-                currentGame.human.move(Player.UP);
+                currentGame.humanMove(Player.UP);
             }
             else if (event.getSource() == buttonDown)
             {
-                currentGame.human.move(Player.DOWN);
+                currentGame.humanMove(Player.DOWN);
             }
-            displayBoard(currentGame.displayBoard());
         }
     }
 }

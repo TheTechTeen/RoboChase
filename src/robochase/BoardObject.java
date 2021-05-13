@@ -1,9 +1,9 @@
-public class BoardObject
+public abstract class BoardObject
 {
     private String name;
     protected int x;
     protected int y;
-    private char symbol;
+    protected char symbol;
 
     BoardObject(String name, char symbol, int x, int y)
     {
@@ -41,5 +41,12 @@ public class BoardObject
     public void setY(int y)
     {
         this.y = y;
+    }
+
+    public abstract void onCollide(BoardObject object, Engine game);
+
+    public void destroy(Engine game)
+    {
+        game.removeFromBoard(this);
     }
 }

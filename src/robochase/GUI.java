@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public interface GUI {
-    public void displayBoard(String boardString);
+    void displayBoard (ArrayList<BoardObject> boardObjects, int boardWidth, int boardHeight);
 }

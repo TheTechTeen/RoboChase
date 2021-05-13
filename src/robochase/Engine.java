@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Engine 
 {
@@ -7,56 +6,34 @@ public class Engine
     private int numCols;
     private ArrayList<BoardObject> entities;
 
-    private final char FENCE = 'X';
-    private final char STAIR = '>';
-    private final char FLOOR = ' ';
+    private final int stairX = 5; // TODO: Export and hardcode
+    private final int stairY = 0;
 
-    private int stairX = 5;
-    private int stairY = 0;
+    private int level;
 
-    public Player human = new Player();
+    private final GUI gui;
 
-    Engine() 
+    public Player human;
+
+    public Engine(GUI gui)
     {
-        startLevel(1);
+        this.gui = gui;
     }
 
-    public void startLevel(int level)
+    public void startLevel(boolean startOver)
     {
+        if (startOver)
+        {
+            level = 1;
+        }
+        else
+        {
+            level += 1;
+        }
         initializeBoard(12, 12);
-        placeRobots(3 + level); // eventually should export this so it isn't hardcoded
+        placeRobots(3 + level, 0.1 + (level * 0.02)); // eventually should export this so it isn't hardcoded
         placeHuman();
-    }
-
-    public String displayBoard()
-    {
-        char[][] board = new char[numRows][numCols];
-        
-        for (char[] row : board) 
-        {
-            Arrays.fill(row, FLOOR);
-        }
-        
-        for (BoardObject entity : entities) 
-        {
-            board[entity.getY()][entity.getX()] = entity.getSymbol();
-        }
-
-        StringBuilder boardString = new StringBuilder();
-
-        for (char[] row : board) 
-        {
-            for (char letter : row) 
-            {
-                boardString.append(letter);
-            }
-            boardString.append("\n");
-        }
-
-        // remove the final newline
-        boardString.deleteCharAt(boardString.length() - 1);
-
-        return boardString.toString();
+        gui.displayBoard(entities, numCols, numRows);
     }
 
     public void initializeBoard(int numRows, int numCols)
@@ -64,7 +41,7 @@ public class Engine
         this.numCols = numCols;
         this.numRows = numRows;
 
-        this.entities = new ArrayList<BoardObject>();
+        this.entities = new ArrayList<>();
 
         for (int y = 0; y < numRows; y++) 
         {
@@ -72,11 +49,11 @@ public class Engine
             {
                 if (x == stairX && y == stairY)
                 {
-                    entities.add(new BoardObject("Stair", STAIR, x, y));
+                    entities.add(new Stair(x, y));
                 }
                 else if (y == 0 || y == numRows - 1 || x == 0 || x == numCols - 1)
                 {
-                    entities.add(new BoardObject("Fence", FENCE, x, y));
+                    entities.add(new Obstacle("Fence", x, y));
                 }
             }
         }
@@ -84,7 +61,7 @@ public class Engine
 
     public ArrayList<BoardObject> getObjectsAt(int x, int y)
     {
-        ArrayList<BoardObject> squareEntities = new ArrayList<BoardObject>();
+        ArrayList<BoardObject> squareEntities = new ArrayList<>();
 
         for (BoardObject boardObject : entities) 
         {
@@ -104,15 +81,14 @@ public class Engine
         int humanY;
         do 
         {
-            humanX = (int) 1 + (int)(Math.random() * ((numCols - 2) + 1));
-            humanY = (int) 1 + (int)(Math.random() * ((numRows - 2) + 1));
+            humanX = 1 + (int)(Math.random() * ((numCols - 2) + 1));
+            humanY = 1 + (int)(Math.random() * ((numRows - 2) + 1));
         } while (getObjectsAt(humanX, humanY).size() > 0);
-        human.setX(humanX);
-        human.setY(humanY);
+        human = new Player(humanX, humanY);
         entities.add(human);
     }
 
-    public void placeRobots(int robotCount)
+    public void placeRobots(int robotCount, double efficiency)
     {
         // Place the correct number of robots on empty spaces
         int robotX;
@@ -122,10 +98,25 @@ public class Engine
         {
             do 
             {
-                robotX = (int) 1 + (int)(Math.random() * ((numCols - 2) + 1));
-                robotY = (int) 1 + (int)(Math.random() * ((numRows - 2) + 1));
+                robotX = 1 + (int)(Math.random() * ((numCols - 2) + 1));
+                robotY = 1 + (int)(Math.random() * ((numRows - 2) + 1));
             } while (getObjectsAt(robotX, robotY).size() > 0);
-            entities.add(new BoardObject("Robot", 'R', robotX, robotY));
+            entities.add(new Robot(robotX, robotY, efficiency));
+        }
+    }
+
+    public void removeFromBoard(BoardObject object)
+    {
+        entities.remove(object);
+    }
+
+    public void humanMove(int direction)
+    {
+        if (human.alive)
+        {
+            human.move(direction, this);
+            Robot.robotsMove(this);
+            gui.displayBoard(entities, numCols, numRows);
         }
     }
 }
