@@ -7,8 +7,8 @@ public class Obstacle extends BoardObject
     }
 
     @Override
-    public void onCollide (BoardObject object, Engine game)
+    public boolean onCollide (BoardObject object)
     {
-        return;
+        return false;
     }
 }

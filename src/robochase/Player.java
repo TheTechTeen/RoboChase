@@ -17,7 +17,7 @@ public class Player extends BoardObject
         alive = true;
     }
 
-    public void move(int direction, Engine game)
+    public void move(int direction)
     {
         if (!alive)
         {
@@ -40,29 +40,21 @@ public class Player extends BoardObject
         {
             x++;
         }
-        for (BoardObject collidee:game.getObjectsAt(x, y))
-        {
-            onCollide(collidee, game);
-            collidee.onCollide(this, game);
-        }
     }
 
     @Override
-    public void onCollide (BoardObject object, Engine game)
+    public boolean onCollide (BoardObject object)
     {
         if (object instanceof Robot)
         {
             alive = false;
-            symbol = SMOOSHED;
+            changeSymbol(SMOOSHED);
         }
         else if (object instanceof Obstacle)
         {
             alive = false;
-            symbol = SMOOSHED;
+            changeSymbol(SMOOSHED);
         }
-        else if (object instanceof Stair)
-        {
-            game.startLevel(false);
-        }
+        return false;
     }
 }

@@ -2,11 +2,10 @@ import java.util.ArrayList;
 
 public class Robot extends BoardObject
 {
-    private static final ArrayList<Robot> robots = new ArrayList<Robot>();
+    private static final ArrayList<Robot> robots = new ArrayList<>();
 
     public final static char SYMBOL = 'R';
     public final static String NAME = "Robot";
-    public final static char SCRAP = '#';
 
     private boolean alive = true;
     private double efficiency;
@@ -17,40 +16,43 @@ public class Robot extends BoardObject
     {
         super(NAME + (robots.size()+1), SYMBOL, x, y);
         this.efficiency = efficiency;
+        System.out.println(efficiency);
         robots.add(this);
     }
 
     @Override
-    public void onCollide (BoardObject object, Engine game)
+    public boolean onCollide (BoardObject object)
     {
         if (object instanceof Robot)
         {
-            destroy(game);
+            destroy();
+            return true;
         }
-        if (object instanceof Obstacle)
+        else if (object instanceof Obstacle)
         {
-            destroy(game);
+            destroy();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    @Override
-    public void destroy(Engine game)
+    public void destroy()
     {
-        symbol = SCRAP; // Eventually replace
+        // TODO: add scrap on die
         alive = false;
     }
 
-    public void move(Engine game)
+    public void move(int playerX, int playerY)
     {
         if (!alive)
         {
             return;
         }
 
-        int playerX = game.human.getX();
-        int playerY = game.human.getY();
-
-        if (efficiency > Math.random())
+        if (Math.random() < efficiency)
         {
             return;
         }
@@ -71,23 +73,13 @@ public class Robot extends BoardObject
         {
             y--;
         }
-
-        for (BoardObject collidee:game.getObjectsAt(x, y))
-        {
-            if(collidee != this)
-            {
-                onCollide(collidee, game);
-                collidee.onCollide(this, game);
-            }
-
-        }
     }
 
-    public static void robotsMove(Engine game)
+    public static void robotsMove(int playerX, int playerY)
     {
         for (Robot robot : robots)
         {
-            robot.move(game);
+            robot.move(playerX, playerY);
         }
     }
 }

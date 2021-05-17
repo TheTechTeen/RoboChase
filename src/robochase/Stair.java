@@ -10,14 +10,8 @@ public class Stair extends BoardObject
     }
 
     @Override
-    public void onCollide (BoardObject object, Engine game)
+    public boolean onCollide (BoardObject object)
     {
-        return;
-    }
-
-    @Override
-    public void destroy (Engine game)
-    {
-        throw new RuntimeException("Stairs should NEVER be destroyed");
+        return false;
     }
 }

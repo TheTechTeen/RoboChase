@@ -3,7 +3,7 @@ public abstract class BoardObject
     private String name;
     protected int x;
     protected int y;
-    protected char symbol;
+    private char symbol;
 
     BoardObject(String name, char symbol, int x, int y)
     {
@@ -33,20 +33,10 @@ public abstract class BoardObject
         return y;
     }
 
-    public void setX(int x)
+    protected void changeSymbol(char symbol)
     {
-        this.x = x;
+        this.symbol = symbol;
     }
 
-    public void setY(int y)
-    {
-        this.y = y;
-    }
-
-    public abstract void onCollide(BoardObject object, Engine game);
-
-    public void destroy(Engine game)
-    {
-        game.removeFromBoard(this);
-    }
+    public abstract boolean onCollide (BoardObject object);
 }

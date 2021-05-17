@@ -31,7 +31,7 @@ public class Engine
             level += 1;
         }
         initializeBoard(12, 12);
-        placeRobots(3 + level, 0.1 + (level * 0.02)); // eventually should export this so it isn't hardcoded
+        placeRobots(3 + level, 0.08 + (level * 0.02)); // eventually should export this so it isn't hardcoded
         placeHuman();
         gui.displayBoard(entities, numCols, numRows);
     }
@@ -110,12 +110,48 @@ public class Engine
         entities.remove(object);
     }
 
+    public void checkCollisions()
+    {
+        for (int y = 0; y < numCols; y++)
+        {
+            for (int x = 0; x < numRows; x++)
+            {
+                ArrayList<BoardObject> objects = getObjectsAt(x, y);
+
+                for (BoardObject object1:objects)
+                {
+                    for (BoardObject object2 : objects)
+                    {
+                        if (object1 != object2)
+                        {
+                            // NOTE: onCollide's boolean return indicates whether the object
+                            // should be removed from the board after the collision with the other object
+                            if (object1.onCollide(object2))
+                            {
+                                removeFromBoard(object1);
+                            }
+                            if (object2.onCollide(object1))
+                            {
+                                removeFromBoard(object2);
+                            }
+                            if (object1 instanceof Stair && object2 instanceof Player)
+                            {
+                                startLevel(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void humanMove(int direction)
     {
         if (human.alive)
         {
-            human.move(direction, this);
-            Robot.robotsMove(this);
+            human.move(direction);
+            Robot.robotsMove(human.getX(), human.getY());
+            checkCollisions();
             gui.displayBoard(entities, numCols, numRows);
         }
     }
