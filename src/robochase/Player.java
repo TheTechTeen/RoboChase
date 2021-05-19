@@ -1,22 +1,36 @@
-public class Player extends BoardObject 
+/**
+ * The human-controlled board character.
+ *
+ * @author TheTechTeen
+ */
+
+public class Player extends BoardObject
 {
     public final static int UP = 0;
     public final static int LEFT = 1;
     public final static int DOWN = 2;
     public final static int RIGHT = 3;
 
-    public final static char SYMBOL = 'H';
-    public final static char SMOOSHED = '%';
-    public final static String NAME = "Player";
+    private final static char SYMBOL = 'H';
+    private final static char SMOOSHED = '%';
+    private final static String NAME = "Player";
 
     public boolean alive;
 
+    /**
+     * Create a new player at a certain position
+     *
+     */
     public Player(int x, int y)
     {
         super(NAME, SYMBOL, x, y);
         alive = true;
     }
 
+    /**
+     * Move the player
+     * @param direction the direction to move. One of the constants from this class
+     */
     public void move(int direction)
     {
         if (!alive)
@@ -39,6 +53,10 @@ public class Player extends BoardObject
         else if (direction == RIGHT)
         {
             x++;
+        }
+        else
+        {
+            throw new RuntimeException("You messed up. Humans can't fly, nor move diagonally.");
         }
     }
 

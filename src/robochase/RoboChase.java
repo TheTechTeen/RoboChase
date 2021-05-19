@@ -1,5 +1,10 @@
 import javax.swing.WindowConstants;
 
+/**
+ * The main class. Starts the GUI.
+ *
+ * @author TheTechTeen
+ */
 public class RoboChase 
 {
     public static void main(String[] args) 

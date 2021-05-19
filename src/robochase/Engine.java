@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * The central class. Handles input from GUI and controls the board and objects on it.
+ *
+ * @author TheTechTeen
+ **/
+
 public class Engine 
 {
     private int numRows;
@@ -13,13 +19,21 @@ public class Engine
 
     private final GUI gui;
 
-    public Player human;
+    private Player human;
 
+    /**
+     * @param gui a GUI is required in order to display the board.
+     */
     public Engine(GUI gui)
     {
         this.gui = gui;
     }
 
+    /**
+     * Start a new level. Creates and sets up the board.
+     * @param startOver if this is true, a completely new game will be created.
+     *                  otherwise the level will be incremented (the game will go onto the next, harder level)
+     */
     public void startLevel(boolean startOver)
     {
         if (startOver)
@@ -36,7 +50,7 @@ public class Engine
         gui.displayBoard(entities, numCols, numRows);
     }
 
-    public void initializeBoard(int numRows, int numCols)
+    private void initializeBoard(int numRows, int numCols)
     {
         this.numCols = numCols;
         this.numRows = numRows;
@@ -59,6 +73,10 @@ public class Engine
         }
     }
 
+    /**
+     * Gets all objects at a specified x and y value
+     * @return returns a list of the objects at that location
+     */
     public ArrayList<BoardObject> getObjectsAt(int x, int y)
     {
         ArrayList<BoardObject> squareEntities = new ArrayList<>();
@@ -74,7 +92,7 @@ public class Engine
         return squareEntities;
     }
 
-    public void placeHuman()
+    private void placeHuman()
     {
         // Place the human on an empty board space
         int humanX;
@@ -88,7 +106,7 @@ public class Engine
         entities.add(human);
     }
 
-    public void placeRobots(int robotCount, double efficiency)
+    private void placeRobots(int robotCount, double efficiency)
     {
         // Place the correct number of robots on empty spaces
         int robotX;
@@ -105,12 +123,15 @@ public class Engine
         }
     }
 
+    /**
+     * Removes an object from the board
+     */
     public void removeFromBoard(BoardObject object)
     {
         entities.remove(object);
     }
 
-    public void checkCollisions()
+    private void checkCollisions()
     {
         for (int y = 0; y < numCols; y++)
         {
@@ -145,6 +166,11 @@ public class Engine
         }
     }
 
+    /**
+     * Moves the human and updates the world to respond to the move
+     * @param direction the direction the player must move.
+     *                  Must be one of the directions in the Player class.
+     */
     public void humanMove(int direction)
     {
         if (human.alive)
