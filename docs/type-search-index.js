@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"BoardObject"},{"p":"<Unnamed>","l":"Engine"},{"p":"<Unnamed>","l":"GUI"},{"p":"<Unnamed>","l":"Obstacle"},{"p":"<Unnamed>","l":"Player"},{"p":"<Unnamed>","l":"RoboChase"},{"p":"<Unnamed>","l":"RoboGUI"},{"p":"<Unnamed>","l":"Robot"},{"p":"<Unnamed>","l":"Stair"}]
